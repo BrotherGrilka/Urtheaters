@@ -222,7 +222,8 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
     return;
   }
   res.write('<!doctype html>\n');
-  res.write('<title>' + escapeHtml(path) + '</title>\n');
+  res.write('<title>Urtheaters</title>\n');
+  res.write('<link rel="Shortcut Icon" href="/images/favicon.ico"/>');
   res.write('<link rel="stylesheet" type="text/css" href="/css/manners.css">');
   res.write('<div id="ivo"></div><div id="aloysius">');
   res.write('<div id="missCallie"><img src="/images/myrkass.jpg" id="myrkAss"/><h1>' + escapeHtml(path) + '</h1></div>');
