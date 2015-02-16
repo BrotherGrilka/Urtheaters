@@ -223,10 +223,9 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   }
   res.write('<!doctype html>\n');
   res.write('<title>' + escapeHtml(path) + '</title>\n');
-  res.write('<style>\n');
-  res.write('  ol { list-style-type: none; font-size: 1.2em; }\n');
-  res.write('</style>\n');
-  res.write('<h1>Directory: ' + escapeHtml(path) + '</h1>');
+  res.write('<link rel="stylesheet" type="text/css" href="/css/manners.css">');
+  res.write('<div id="ivo"></div><div id="aloysius">');
+  res.write('<div id="missCallie"><img src="/images/myrkass.jpg" id="myrkAss"/><h1>' + escapeHtml(path) + '</h1></div>');
   res.write('<ol>');
   files.forEach(function(fileName) {
     if (fileName.charAt(0) !== '.') {
@@ -235,7 +234,7 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
         escapeHtml(fileName) + '</a></li>');
     }
   });
-  res.write('</ol>');
+  res.write('</ol></div>');
   res.end();
 };
 
