@@ -2,18 +2,28 @@
 
 var sys = require('sys'),
     http = require('http'),
+	https = require('https'),
     fs = require('fs'),
     url = require('url'),
     events = require('events');
 
-
-var DEFAULT_PORT = 8098;
+var DEFAULT_PORT = 8098,
+	MYRKRIDIAN_AURA = 'orange';
 
 function main(argv) {
-  new HttpServer({
-    'GET': createServlet(StaticServlet),
-    'HEAD': createServlet(StaticServlet)
-  }).start(Number(argv[2]) || DEFAULT_PORT);
+	if (argv[2]) {
+		new HttpsServer({
+			'GET': createServlet(StaticServlet),
+			'HEAD': createServlet(StaticServlet)
+		}).start(Number(argv[2]) || DEFAULT_PORT);
+		
+		MYRKRIDIAN_AURA = 'deeppink';
+	} else {
+		new HttpServer({
+    		'GET': createServlet(StaticServlet),
+    		'HEAD': createServlet(StaticServlet)
+  		}).start(Number(argv[2]) || DEFAULT_PORT);
+	}
 }
 
 function escapeHtml(value) {
@@ -39,19 +49,31 @@ function HttpServer(handlers) {
   this.server = http.createServer(this.handleRequest_.bind(this));
 }
 
-HttpServer.prototype.start = function(port) {
+function HttpsServer(handlers) {
+  this.handlers = handlers;
+  this.server = https.createServer(	{
+	    key: fs.readFileSync('servers/mannerssl/urtheaters-key.pem'),
+	    cert: fs.readFileSync('servers/mannerssl/urtheaters-cert.pem')
+	}, this.handleRequest_.bind(this));
+}
+
+var start = function(port) {
   this.port = port;
   this.server.listen(port);
   sys.puts('Http Server running at http://localhost:' + port + '/');
 };
 
-HttpServer.prototype.parseUrl_ = function(urlString) {
+HttpServer.prototype.start = HttpsServer.prototype.start = start;
+
+var parseUrl = function(urlString) {
   var parsed = url.parse(urlString);
   parsed.pathname = url.resolve('/', parsed.pathname);
   return url.parse(url.format(parsed), true);
 };
 
-HttpServer.prototype.handleRequest_ = function(req, res) {
+HttpServer.prototype.parseUrl_ = HttpsServer.prototype.parseUrl_ = parseUrl;
+
+var handleRequest = function(req, res) {
   var logEntry = req.method + ' ' + req.url;
   if (req.headers['user-agent']) {
     logEntry += ' ' + req.headers['user-agent'];
@@ -66,6 +88,8 @@ HttpServer.prototype.handleRequest_ = function(req, res) {
     handler.call(this, req, res);
   }
 };
+
+HttpServer.prototype.handleRequest_ = HttpsServer.prototype.handleRequest_ = handleRequest;
 
 /**
  * Handles static content.
@@ -227,10 +251,14 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   res.write('<link rel="Shortcut Icon" href="/images/favicon.ico"/>');
   res.write('<link rel="stylesheet" type="text/css" href="/css/manners.css">');
   res.write('<div id="ivo"></div><div id="aloysius">');
-  res.write('<div id="missCallie"><img src="/images/myrkass.jpg" id="myrkAss"/><h1>' + escapeHtml(path) + '</h1></div>');
+  res.write('<div id="missCallie"><img src="/images/myrkass.jpg" id="myrkAss" style="border: 1px solid ' + MYRKRIDIAN_AURA + ';"/><h1>' + escapeHtml(path) + '</h1></div>');
   res.write('<ol>');
   files.forEach(function(fileName) {
-    if (fileName.charAt(0) !== '.') {
+	
+	  sys.puts('Miss Piglet:' + fileName);
+	
+	
+    if (fileName.charAt(0) !== '.' && fileName != 'servers/') {
       res.write('<li><a href="' +
         escapeHtml(fileName) + '">' +
         escapeHtml(fileName) + '</a></li>');
