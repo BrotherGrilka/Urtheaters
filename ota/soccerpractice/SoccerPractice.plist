@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>http://urtheaters.com/ota/soccerpractice/SoccerPractice.ipa</string>
+					<string>https://urtheaters.com:8097/ota/soccerpractice/SoccerPractice.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -19,7 +19,7 @@
 					<key>needs-shine</key>
 					<false/>
 					<key>url</key>
-					<string>http://urtheaters.com/ota/soccerpractice/iTunesArtwork</string>
+					<string>https://urtheaters.com:8097/ota/soccerpractice/iTunesArtwork</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -27,7 +27,7 @@
 					<key>needs-shine</key>
 					<false/>
 					<key>url</key>
-					<string>http://urtheaters.com/ota/soccerpractice/icon.png</string>
+					<string>https://urtheaters.com:8097/ota/soccerpractice/icon.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>
