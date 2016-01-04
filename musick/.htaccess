@@ -1,0 +1,6 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^musick.urtheaters.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www.musick.urtheaters.com$
+RewriteRule ^/?$ "http\:\/\/manfredd\.com\/progg\/musick" [R=301,L]
+

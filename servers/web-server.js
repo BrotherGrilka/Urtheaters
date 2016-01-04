@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var sys = require('sys'),
-    http = require('http'),
+	http = require('http'),
 	https = require('https'),
     fs = require('fs'),
     url = require('url'),
@@ -254,10 +254,6 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   res.write('<div id="missCallie"><img src="/images/myrkass.jpg" id="myrkAss" style="border: 1px solid ' + MYRKRIDIAN_AURA + ';"/><h1>' + escapeHtml(path) + '</h1></div>');
   res.write('<ol>');
   files.forEach(function(fileName) {
-	
-	  sys.puts('Miss Piglet:' + fileName);
-	
-	
     if (fileName.charAt(0) !== '.' && fileName != 'servers/') {
       res.write('<li><a href="' +
         escapeHtml(fileName) + '">' +
