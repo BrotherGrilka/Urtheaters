@@ -242,10 +242,12 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   res.writeHead(200, {
     'Content-Type': 'text/html'
   });
+
   if (req.method === 'HEAD') {
     res.end();
     return;
   }
+
   res.write('<!doctype html>\n');
   res.write('<title>Urtheaters</title>\n');
   res.write('<link rel="Shortcut Icon" href="/images/favicon.ico"/>');
@@ -253,6 +255,7 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   res.write('<div id="ivo"></div><div id="aloysius">');
   res.write('<div id="missCallie"><img src="/images/myrkass.jpg" id="myrkAss" style="border: 1px solid ' + MYRKRIDIAN_AURA + ';"/><h1>' + escapeHtml(path) + '</h1></div>');
   res.write('<ol>');
+
   files.forEach(function(fileName) {
     if (fileName.charAt(0) !== '.' && fileName != 'servers/') {
       res.write('<li><a href="' +
@@ -260,6 +263,7 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
         escapeHtml(fileName) + '</a></li>');
     }
   });
+
   res.write('</ol></div>');
   res.end();
 };
